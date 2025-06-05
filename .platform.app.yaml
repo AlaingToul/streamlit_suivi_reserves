@@ -49,6 +49,7 @@ hooks:
         set -e
         pip install --upgrade pip
         pip install -r requirements.txt
+        pip install scripts/libhydro-0.9.5-py3-none-any.whl
         rm -rf logs
         rm -rf .cache
         rm -rf .streamlit_git
