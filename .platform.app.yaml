@@ -1,0 +1,55 @@
+# The name of the app. Must be unique within a project.
+name: app_streamlit_test
+
+# The type of the application to build
+type: 'python:3.12'
+
+# The size of the persistent disk of the application (in MB)
+disk: 1024
+
+# Your app's configuration when it's exposed to the web.
+web:
+    commands:
+        start: |
+            set -e
+            cp -r .streamlit_git/* .cache/
+            cp -f $PLATFORM_APP_DIR/app.py $PLATFORM_APP_DIR/.cache/
+            cp -rf $PLATFORM_APP_DIR/donnees $PLATFORM_APP_DIR/.cache/
+            cp -rf $PLATFORM_APP_DIR/scripts $PLATFORM_APP_DIR/.cache/
+            cd $PLATFORM_APP_DIR/.cache
+            streamlit run ./app.py --server.port $PORT --server.address 0.0.0.0
+    upstream:
+        socket_family: tcp
+        protocol: http
+    locations:
+        "/":
+            root: 'app/.cache'
+            passthru: true
+
+mounts:
+    # Set a local read/write mount for logs.
+    "logs":
+        source: local
+        source_path: logs
+    # Set a local read/write mount for the cache.
+    # This is where the streamlit cache will be stored.
+    "/.cache":
+        source: local
+        source_path: .cache
+    "/.streamlit":
+        source: local
+        source_path: .streamlit
+
+# The hooks executed at various points in the lifecycle of the application.
+hooks:
+    # astuces utilisées :
+    # - pour lancer streamlit dans le dossier .cache car c'est un dossier avec droits en écriture
+    # - pour rendre disponible en écriture le dossier .streamlit (cf. mounts)
+    build: |
+        set -e
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        rm -rf logs
+        rm -rf .cache
+        rm -rf .streamlit_git
+        mv .streamlit .streamlit_git
