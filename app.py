@@ -69,7 +69,7 @@ def get_donnees_reservoirs():
     # et les enregistre dans le dossier ./donnees/chroniques
 
     inp="./donnees/recuperer_donnees_aghyre_v1.ini"
-    with subprocess.Popen(["python", "./scripts/Aghyre/recuperer_donnees_aghyre_v1.py", inp],
+    with subprocess.Popen(["python3", "./scripts/Aghyre/recuperer_donnees_aghyre_v1.py", inp],
                                 stderr=subprocess.STDOUT,
                                 stdout=subprocess.PIPE,
                                 bufsize=0,
