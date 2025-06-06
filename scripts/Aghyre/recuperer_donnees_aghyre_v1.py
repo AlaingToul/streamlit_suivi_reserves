@@ -12,7 +12,7 @@ import datetime as dt
 import os
 import sys
 import json
-import urllib3
+#import urllib3
 import pandas as pd
 import requests
 
@@ -22,7 +22,7 @@ import configparser # Permet de parser le fichier de paramètres
 # analyse du flux xml sandre
 from libhydro.conv.xml import Message
 
-urllib3.disable_warnings()
+#urllib3.disable_warnings()
 
 #-------------------------------------------------------------------------------
 
