@@ -4,6 +4,7 @@ branca
 mapclassify
 matplotlib
 numpy
+openpyxl
 pandas
 requests
 seaborn
